@@ -77,7 +77,7 @@ hydra_client::discover_server(
     if (b_debug_flag)
     {
       // Print the response data
-      std::cout <<  "<client> Discovering server" << std::endl;;
+      std::cout <<  "[client] Discovering Virtualization Daemon" << std::endl;;
     }
 
    const int MAX_MSG = 100;
@@ -95,7 +95,7 @@ hydra_client::discover_server(
      if (b_debug_flag)
      {
        // Print the response data
-      std::cout << "<client> Received: " << msg << std::endl;
+      std::cout << "[client] Received: " << msg << std::endl;
      }
 
      std::vector<std::string> sp;
@@ -209,7 +209,7 @@ hydra_client::factory(const std::string &s_message)
   // If printing debug messages
   if (b_debug_flag)
   {
-     std::cout << boost::format("<client> Connecting to XVL server: %s:%s") % s_server_host % s_server_port << std::endl;
+     std::cout << boost::format("[client] Connecting to XVL server: %s:%s") % s_server_host % s_server_port << std::endl;
   }
   // Connect to the XVL Server
   socket.connect (("tcp://" + s_server_host + ":" + s_server_port).c_str());
@@ -217,7 +217,7 @@ hydra_client::factory(const std::string &s_message)
   // If printing debug messages
   if (b_debug_flag)
   {
-    std::cout << "<client> Sending: " << s_message.data() << std::endl;
+    std::cout << "[client] Sending: " << s_message.data() << std::endl;
   }
 
   // Create ZMQ message type and copy the message to it
@@ -242,7 +242,7 @@ hydra_client::factory(const std::string &s_message)
     if (b_debug_flag)
     {
       // Print the response data
-      std::cout << "<client> Received message: " << s_response << std::endl;
+      std::cout << "[client] Received message: " << s_response << std::endl;
     }
 
     // Return the reply data
@@ -250,7 +250,7 @@ hydra_client::factory(const std::string &s_message)
   }
   else
   {
-    std::cerr << "<client> Server timeout." << std::endl;
+    std::cerr << "[client] Server timeout." << std::endl;
     exit(20);
   }
 }

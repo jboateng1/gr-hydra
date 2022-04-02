@@ -1,0 +1,13 @@
+[2022-03-28 15:52:36.555413][backend|usrp][info]: Creating USRP with args ""
+[2022-03-28 15:52:38.542606][backend|usrp][info]: Setting TX Rate: 2000000.000000
+[2022-03-28 15:52:38.946150][backend|usrp][info]: Actual TX Rate: 2000000.000000
+[2022-03-28 15:52:38.946221][backend|usrp][info]: Setting TX Gain: 0.600000
+[2022-03-28 15:52:38.946602][backend|usrp][info]: Actual TX Gain: 0.598886
+[2022-03-28 15:52:38.946648][backend|usrp][info]: Setting TX freq: 1100.000000 [MHz]
+[2022-03-28 15:52:38.971494][backend|usrp][info]: Actual TX freq: 1100.000000 [MHz]
+[2022-03-28 15:52:39.147935][backend|usrp][info]: Setting RX Rate: 2000000.000000
+[2022-03-28 15:52:39.148365][backend|usrp][info]: Actual RX Rate: 2000000.000000
+[2022-03-28 15:52:39.148412][backend|usrp][info]: Setting RX Gain: 0.000000
+[2022-03-28 15:52:39.148725][backend|usrp][info]: Actual RX Gain: 0.000000
+[2022-03-28 15:52:39.148766][backend|usrp][info]: Setting RX freq: 1105.000000 [MHz]
+[2022-03-28 15:52:39.152367][backend|usrp][info]: Actual RX freq: 1105.000000 [MHz]

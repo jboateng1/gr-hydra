@@ -8,17 +8,36 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char **argv)
 {
+
   // Hypervisor's CF
   double cf = 2e9;
+  
+  // INPUT VIA ARGUMENT
+  //double cf = strtod(argv[1], NULL);
 
+  // INPUT VIA STANDARD INPUT
+  //double cf;
+  //printf("Input cf: ");
+  //scanf("%lf", &cf);
+
+  double vr_1_cf1;
+
+  double vr_1_cf = cf - vr_1_cf1; 
+  
+  double vr_1_bw;
   // VR 1 specs
-  double vr_1_cf = cf + 200e3;
-  double vr_1_bw = 200e3;
+ std::cout << "------------- Reserve Resources ------------" << std::endl;
+ printf("Input Center Frequency: ");
+ scanf("%lf", &vr_1_cf1);
+
+ printf("Input Bandwidth: ");
+ scanf("%lf", &vr_1_bw);
+ 
 
   // Request resources
-  std::cout << "------------- Requesting" << std::endl;
+  std::cout << "------------- Requesting ---------------" << std::endl;
   std::cout << "CF: "  << vr_1_cf << "\tBW: " <<  vr_1_bw << std::endl;
 
   hydra::hydra_client s1 = hydra::hydra_client("127.0.0.1", 5000, 91, "default", true);

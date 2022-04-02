@@ -288,7 +288,7 @@ rf_front_end::create_chunks(double d_centre_freq,
   else
   {
     // Output some debug information
-    p_logger->info("Reserved " + std::to_string(d_bandwidth) + "[Hz] at " + std::to_string(d_centre_freq) + "[Hz] for Virtual Radio #" + std::to_string(u_id));
+    p_logger->info("Reserved " + std::to_string(d_bandwidth) + "[Hz] at " + std::to_string(d_centre_freq) + "[Hz] for Container #" + std::to_string(u_id));
   }
 
   return result;

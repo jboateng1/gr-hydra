@@ -215,7 +215,7 @@ Hypervisor::set_tx_mapping(VirtualRadio &vr, iq_map_vec &subcarriers_map)
 {
    double vr_bw = vr.get_tx_bandwidth();
    double vr_cf = vr.get_tx_freq();
-   double offset = (vr_cf - vr_bw/2.0) - (g_tx_cf - g_tx_bw/2.0) ;
+   double offset = (vr_cf - vr_bw/2.0) - (g_tx_cf - g_tx_bw/2.0) ;//check how the VRadio CF and BW are used!!
 
    // First VR subcarrier
    int sc = offset / (g_tx_bw / tx_fft_len);
@@ -227,6 +227,9 @@ Hypervisor::set_tx_mapping(VirtualRadio &vr, iq_map_vec &subcarriers_map)
    }
    double c_bw = fft_n*g_tx_bw/tx_fft_len;
    double c_cf = g_tx_cf - g_tx_bw/2 + (g_tx_bw/tx_fft_len) * (sc + (fft_n/2));
+
+//User will request some BW and CF!!
+//We perform calculation based on available resources ad assign the actual BW and CF for the User!!
 
    logger.debug(str(boost::format("TX Request VR BW: %1%, CF: %2% ") % vr_bw % vr_cf));
    logger.debug(str(boost::format("TX Actual  VR BW: %1%, CF: %2% ") % c_bw % c_cf));
@@ -269,6 +272,8 @@ Hypervisor::get_tx_window(iq_window &optr, size_t len)
         g_ifft_complex->get_inbuf()+len,
         std::complex<float>(0,0));
 
+//IQ sample multiplexing from various vRadios taking place!!
+
     for (auto it = g_vradios.begin(); it != g_vradios.end(); ++it)
     {
       if ((*it)->get_tx_enabled())
@@ -277,6 +282,9 @@ Hypervisor::get_tx_window(iq_window &optr, size_t len)
   }
 
   g_ifft_complex->execute();
+
+
+//After IFFT is executed, the Time-Domain multiplexed samples are sent to the output BUFFER of hypervisor!!
 
   optr.assign(g_ifft_complex->get_outbuf(),
               g_ifft_complex->get_outbuf() + len);
@@ -389,12 +397,18 @@ Hypervisor::forward_rx_window(iq_window &buf, size_t len)
   if (g_vradios.size() == 0) return;
 
     g_fft_complex->set_data(&buf.front(), len);
+
+    // Perform FFT to convert the Time Domain sample to frequency domain!!
     g_fft_complex->execute();
+
+    //Iterate over the virtual radios and map the respective IQ samples according to the FFT size!!
 
     std::lock_guard<std::mutex> _l(vradios_mtx);
     for (vradio_vec::iterator it = g_vradios.begin();
          it != g_vradios.end();
          ++it)
+      
+      //Connect to the udp ports of each VRadio to deliver the IQ samples to their buffer!!
       {
         if ((*it)->get_rx_enabled())
           (*it)->demap_iq_samples(g_fft_complex->get_outbuf(), get_rx_fft());

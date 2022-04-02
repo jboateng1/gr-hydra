@@ -51,7 +51,7 @@ class Slice:
         if (ret < 0):
             print "Error allocating TX resources: freq: %f, bandwidth %f" % (freq, bandwidth) 
 
-        #  Configure the RX freq for UE (to receive from the slice)
+        #  Configure the TX freq for UE (to receive from the slice)
         self.ue.set_freqtx(freq)
         self.ue.set_vr1offset(0)
         self.ue.set_vr2offset(0)
