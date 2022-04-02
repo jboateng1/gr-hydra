@@ -4,10 +4,8 @@ namespace hydra {
 
 hydra_client::hydra_client(std::string client_ip,
                            unsigned int u_port,
-                           unsigned int u_client_id,
                            std::string s_group_name,
                            bool b_debug):
-  u_id(u_client_id),
   b_debug_flag(b_debug),
   s_client_host(client_ip),
   s_group(s_group_name)
@@ -114,6 +112,9 @@ hydra_client::request_tx_resources(rx_configuration &tx_conf)
   if (not bool(tx_conf.center_freq) or not bool(tx_conf.bandwidth) or s_server_host == "")
   {
     std::cerr << "Missing TX information!" << std::endl;
+    std::cerr << "center_freq: '" << tx_conf.center_freq << "' !" << std::endl;
+    std::cerr << "bandwidth: '" << tx_conf.bandwidth << "' !" << std::endl;
+    std::cerr << "server_host: '" << s_server_host << "' !" << std::endl;
     return -1;
   }
 

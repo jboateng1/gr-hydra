@@ -188,27 +188,52 @@ rf_front_end::rf_front_end(double d_cf,
   p_logger = logger;
 }
 
+// calls another program, returns the new process id
+int call_external_program(char * const args_list[]) {
+  int fork_val = fork();
+  if (fork_val < 0) {
+    std::cerr << "Fork error\n";
+    return 0;
+  }
+  if (fork_val == 0) {
+    // We are child
+    execvp(args_list[0], args_list);
+  }
+  return fork_val;
+}
+
 int
-rf_front_end::create_chunks(double d_centre_freq,
+rf_front_end::create_chunks(double d_centre_freq, // change to 'chunk new_chunk'
                             double d_bandwidth,
                             unsigned int u_id)
 {
   // Hold the result - One if bad
-  int result = 1;
+  bool problem_allocating = 1;
 
+  int chunk_index = 0;
   // Iterate over the list of chunks
   for (auto it = resources.begin(); it != resources.end(); it++)
   {
+    chunk_index++;
+    std::cerr << "Chunk " << chunk_index << " with bandwidth " << it->d_bandwidth << " and cf " << it->d_centre_freq << " has id " << it->u_id << std::endl;
+
     // Jumps to next chunk if the current chunk isn't free
-    if (it->u_id != 0) {continue;}
+    if (it->u_id != 0) {
+      std::cerr << "Chunk skipped because it is occupied\n";
+      continue;
+    }
 
     // Jump to next chunk if this doesn't fit
     if ((2 * it->d_centre_freq - it->d_bandwidth > 2 * d_centre_freq - d_bandwidth) or
-        (2 * it->d_centre_freq + it->d_bandwidth < 2 * d_centre_freq + d_bandwidth)) {continue;}
+        (2 * it->d_centre_freq + it->d_bandwidth < 2 * d_centre_freq + d_bandwidth)) {
+      std::cerr << "Chunk skipped because math\n";
+      continue;
+    }
 
     /* If there's free space in the lower band */
     if (2 * it->d_centre_freq - it->d_bandwidth < 2 * d_centre_freq - d_bandwidth)
     {
+      std::cerr << "Free space in lower\n";
       double l_bandwidth = (d_centre_freq - it->d_centre_freq) - 0.5 * (d_bandwidth - it->d_bandwidth);
       double l_centre_freq = d_centre_freq - 0.5 * (d_bandwidth + l_bandwidth);
       // If this is the first chunk
@@ -239,6 +264,7 @@ rf_front_end::create_chunks(double d_centre_freq,
     // If there's free space in the upper band
     if (2 * it->d_centre_freq + it->d_bandwidth > 2 * d_centre_freq + d_bandwidth)
     {
+      std::cerr << "Free space in upper\n";
       double r_bandwidth = (it->d_centre_freq - d_centre_freq) + 0.5 * (it->d_bandwidth - d_bandwidth);
       double r_centre_freq =  d_centre_freq + 0.5 * (d_bandwidth + r_bandwidth);
 
@@ -268,19 +294,19 @@ rf_front_end::create_chunks(double d_centre_freq,
       }
     } // End upper band
 
+    std::cerr << "Free space found, allocating chunk\n";
     // Create a chunk for the given service
     (*it) = chunk(d_centre_freq, d_bandwidth, u_id);
 
 
     // Change the result flag -- zero is a great signal
-    result = 0;
+    problem_allocating = 0;
     // Break the while loop and exit
     break;
 
   } // End for loop
 
-  // Depending on the results
-  if (result)
+  if (problem_allocating)
   {
     // Output some debug information
     p_logger->warning("Could not reserve " + std::to_string(d_bandwidth) + "[Hz] at " + std::to_string(d_centre_freq) + "[Hz] for Virtual Radio #" + std::to_string(u_id));
@@ -289,9 +315,11 @@ rf_front_end::create_chunks(double d_centre_freq,
   {
     // Output some debug information
     p_logger->info("Reserved " + std::to_string(d_bandwidth) + "[Hz] at " + std::to_string(d_centre_freq) + "[Hz] for Container #" + std::to_string(u_id));
+    char * const args[] = {"ls", "-l", NULL};
+    call_external_program(args);
   }
 
-  return result;
+  return problem_allocating;
 }
 
 

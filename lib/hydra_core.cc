@@ -102,6 +102,7 @@ HydraCore::request_rx_resources(unsigned int u_id,
   return u_udp_port++;
 }
 
+// TODO Returns a port number, or an error message, this code is bad
 int
 HydraCore::request_tx_resources(unsigned int u_id,
                                 double d_centre_freq,

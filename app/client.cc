@@ -23,8 +23,6 @@ int main(int argc, char **argv)
   //scanf("%lf", &cf);
 
   double vr_1_cf1;
-
-  double vr_1_cf = cf - vr_1_cf1; 
   
   double vr_1_bw;
   // VR 1 specs
@@ -34,13 +32,15 @@ int main(int argc, char **argv)
 
  printf("Input Bandwidth: ");
  scanf("%lf", &vr_1_bw);
- 
+
+  double vr_1_cf = cf - vr_1_cf1; 
+
 
   // Request resources
   std::cout << "------------- Requesting ---------------" << std::endl;
   std::cout << "CF: "  << vr_1_cf << "\tBW: " <<  vr_1_bw << std::endl;
 
-  hydra::hydra_client s1 = hydra::hydra_client("127.0.0.1", 5000, 91, "default", true);
+  hydra::hydra_client s1 = hydra::hydra_client("127.0.0.1", 5000, "default", true);
 
   s1.check_connection();
   s1.query_resources();

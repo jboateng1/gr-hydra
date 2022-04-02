@@ -73,6 +73,7 @@ HydraServer::auto_discovery()
   // ad_logger.info("Stopped autodiscovery");
 }
 
+int new_id = 1;
 // Run the server
 int
 HydraServer::run()
@@ -204,8 +205,14 @@ HydraServer::run()
 	logger.debug("d_bw: " + std::to_string(d_bw));
 	logger.debug("u_id: " + std::to_string(u_id));
 
-        // If there's no CF, BW or ID
-        if (not bool(d_cf) or not bool(d_bw) or not u_id)
+        // If ID == 0, the client is asking us to give them an id
+        if (u_id == 0) {
+          u_id = new_id;
+          new_id++;
+        }
+
+        // If there's no CF, BW
+        if (not bool(d_cf) or not bool(d_bw))
         {
           // Add the content
           content.put("status", false);

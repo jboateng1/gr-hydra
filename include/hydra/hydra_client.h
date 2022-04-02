@@ -36,7 +36,6 @@ public:
     */
    hydra_client(std::string client_ip = "localhost",
                 unsigned int u_port = 5000,
-                unsigned int u_client_id = 10,
                 std::string s_group_name = "default",
                 bool b_debug = false);
 
@@ -75,7 +74,7 @@ private:
    bool b_debug_flag;
 
    /* Client ID -- TODO need a better way to define it */
-   int u_id;
+   int u_id = 0;
 
 };
 

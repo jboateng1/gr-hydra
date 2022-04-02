@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
 
   // Request resources
   std::string lalala;
-  hydra::hydra_client s1 = hydra::hydra_client("127.0.0.1", 5000, 1, "default", true);
+  hydra::hydra_client s1 = hydra::hydra_client("127.0.0.1", 5000, "default", true);
 
   hydra::rx_configuration tx_conf{1.1e9 + 500e3, std::stof(rate)};
   lalala = s1.request_tx_resources(tx_conf);
