@@ -26,6 +26,8 @@ Hypervisor::Hypervisor()
 {
 }
 
+
+//Yung-Fu's API sends Center Freq and BW here!
 Hypervisor::Hypervisor(size_t _fft_m_len,
       double central_frequency,
       double bandwidth):
@@ -43,6 +45,8 @@ Hypervisor::Hypervisor(size_t _fft_m_len,
   logger = hydra_log("hypervisor");
 };
 
+
+//Creates a VR and returns the ID of the VRadio
 size_t
 Hypervisor::create_vradio(double cf, double bandwidth)
 {

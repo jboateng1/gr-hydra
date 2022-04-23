@@ -91,6 +91,7 @@ int main(int argc, char* argv[])
      std::cout << "i: " << i << ": " << argv[i] << std::endl;
   }
 
+/*
   // Request resources
   std::string lalala;
   hydra::hydra_client s1 = hydra::hydra_client("127.0.0.1", 5000, "default", true);
@@ -102,17 +103,18 @@ int main(int argc, char* argv[])
   // Initialise the async IO service
   boost::asio::io_service io_service;
   UDPClient client(io_service, tx_conf.server_ip, std::to_string(tx_conf.server_port));
-
+*/
   std::cout << "FFT Size: " << p_size << "\tSampling rate: " << rate << "\tThreshold: " << p_size * 1e6 / std::stod(rate) << std::endl;
   // Construct the payload array
   std::array<std::complex<double>, p_size> payload;
   // Fill the array with IQ samples
+  
 
   if (file == "")
   {
-     payload.fill(std::complex<double>(2.0, 1.0));
+     payload.fill(std::complex<double>(2.0, 1.0));//Need explanation
      // Send the payload at the given rate
-     client.send(payload, std::stod(rate), true);
+     //client.send(payload, std::stod(rate), true);
   }
   else
   {
@@ -127,15 +129,27 @@ int main(int argc, char* argv[])
 
      fin.seekg(0, std::ios::end);
      const size_t num_elements = fin.tellg() / sizeof(complex);
+     std::string sk = std::to_string(num_elements);
+     printf("%s\n",sk.c_str());
+     //std::cout << sk;
+
      fin.seekg(0, std::ios::beg);
      std::vector<float> data(num_elements);
      fin.read(reinterpret_cast<char*>(&data[0]), num_elements*sizeof(float));
+
+std::cout << "DATA: ";
+    for (int i = 0; i < data.size(); i++) {
+      // std::cout << '(' << data[i] << ", " << data[++i] << ')' << ' ';
+      // float *shared_memory;
+      // shared_memory[i] = data[i];
+      // shared_memory should have num_elements*sizeof(float) bytes
+    }std::cout << std::endl;
 
      size_t counter = 0;
      while ((counter + p_size) < num_elements)
      {
         std::copy(&data[counter], &data[counter + p_size], payload.begin());
-        client.send(payload, std::stod(rate), false);
+        //client.send(payload, std::stod(rate), false);
         counter += p_size;
      }
   }

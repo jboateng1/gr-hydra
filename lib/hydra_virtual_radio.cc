@@ -181,7 +181,7 @@ VirtualRadio::map_tx_samples(iq_sample *samples_buf)
   iq_sample *outbuf = g_fft_complex->get_outbuf();
 
   // map samples in FREQ domain to samples_buff
-  // perfors fft shift
+  // performs fft shift
   int idx = 0;
   for (auto it = g_tx_map.begin(); it != g_tx_map.end(); ++it, ++idx)
   {
@@ -204,6 +204,8 @@ VirtualRadio::set_rx_freq(double cf)
   return err;
 }
 
+
+
 void
 VirtualRadio::set_rx_bandwidth(double bw)
 {
@@ -215,11 +217,15 @@ VirtualRadio::set_rx_bandwidth(double bw)
     g_rx_bw = old_bw;
 }
 
+
+
 void
 VirtualRadio::set_rx_mapping(const iq_map_vec &iq_map)
 {
   g_rx_map = iq_map;
 }
+
+
 
 void
 VirtualRadio::demap_iq_samples(const iq_sample *samples_buf, size_t len)
@@ -237,5 +243,6 @@ VirtualRadio::demap_iq_samples(const iq_sample *samples_buf, size_t len)
   /* Append new samples */
   rx_resampler->buffer()->write(g_ifft_complex->get_outbuf(), g_rx_fft_size);
 }
+
 
 } /* namespace hydra */

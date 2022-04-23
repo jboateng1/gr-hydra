@@ -203,7 +203,7 @@ int call_external_program(char * const args_list[]) {
 }
 
 int
-rf_front_end::create_chunks(double d_centre_freq, // change to 'chunk new_chunk'
+rf_front_end::create_chunks(double d_centre_freq, // TODO change to 'chunk new_chunk'
                             double d_bandwidth,
                             unsigned int u_id)
 {
@@ -309,13 +309,15 @@ rf_front_end::create_chunks(double d_centre_freq, // change to 'chunk new_chunk'
   if (problem_allocating)
   {
     // Output some debug information
-    p_logger->warning("Could not reserve " + std::to_string(d_bandwidth) + "[Hz] at " + std::to_string(d_centre_freq) + "[Hz] for Virtual Radio #" + std::to_string(u_id));
+    p_logger->warning("Could not reserve " + std::to_string(d_bandwidth) + "[Hz] at " + std::to_string(d_centre_freq) + "[Hz] for Container #" + std::to_string(u_id));
   }
   else
   {
     // Output some debug information
     p_logger->info("Reserved " + std::to_string(d_bandwidth) + "[Hz] at " + std::to_string(d_centre_freq) + "[Hz] for Container #" + std::to_string(u_id));
-    char * const args[] = {"ls", "-l", NULL};
+    char u_id_str[16];
+    sprintf(u_id_str, "%u", u_id);
+    char * const args[] = {"/root/gr-hydra/app/create_container.sh", u_id_str, "A third argument", NULL};
     call_external_program(args);
   }
 

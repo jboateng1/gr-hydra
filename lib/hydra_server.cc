@@ -34,6 +34,18 @@ HydraServer::auto_discovery()
   int rx_port = 5001;
   int tx_port = 5002;
 
+  //Container tx and rx ports on server/hypervisor 
+  int con1_rx_port = 5003;
+  int con1_tx_port = 5004;
+  int con2_rx_port = 5005;
+  int con2_tx_port = 5006;
+  int con3_rx_port = 5007;
+  int con3_tx_port = 5008;
+
+
+
+
+
   hydra_log ad_logger("server|audodiscovery");
 
   ad_logger.info("Waiting for data on port UDP " + std::to_string(rx_port));
@@ -113,7 +125,7 @@ HydraServer::run()
     //  Wait for next request from client
     try
     {
-      // Try receive messages from clinets
+      // Try receive messages from clients
       rc = socket.recv(&request);
     }
     // Catch ZMQ errors
