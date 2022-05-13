@@ -397,7 +397,7 @@ int main(int argc, const char *argv[])
       for (int j = 0; j < num_iq; j++) {
         (*iq_buf)[j] = shm1[j];
       }
-      std::shared_ptr<hydra_buffer<iq_sample>> buf_ptr = std::make_unique<hydra_buffer<iq_sample>>(iq_buf);
+      std::shared_ptr<hydra_buffer<iq_sample>> buf_ptr = std::shared_ptr<hydra_buffer<iq_sample>>(iq_buf);
       container->set_container_tx_chain(2000.2e6, 0.2e6, u_tx_fft_size, d_tx_samp_rate, buf_ptr);
       std::cout << "containerID: " << ID << "\n";
 

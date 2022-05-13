@@ -35,10 +35,6 @@
 
 namespace hydra
 {
-  extern iq_map_vec container1_map;
-  extern iq_map_vec container2_map;
-  extern iq_map_vec container3_map;
-
   class Hypervisor
   {
   public:
@@ -132,6 +128,10 @@ namespace hydra
     void rx_run();
     void forward_rx_window(iq_window &optr, size_t len); // where the rx things happen
 
+
+    iq_map_vec container1_map;
+    iq_map_vec container2_map;
+    iq_map_vec container3_map;
   private:
     // All TX structures
     size_t tx_fft_len; // FFT M length

@@ -391,7 +391,7 @@ namespace hydra
     return fft_n;
   }
 
-  iq_map_vec map_return(int ID)
+  iq_map_vec Hypervisor::map_return(int ID)
   {
 
     if (ID == 0)
@@ -517,17 +517,17 @@ namespace hydra
 
         if (ID == 0)
         {
-          iq_map_vec container1_map = the_map;
+          container1_map = the_map;
           con->map_container_tx_samples(ifft_inbuff->get_inbuf(), fft_n, container1_map);
         }
         else if (ID == 1)
         {
-          iq_map_vec container2_map = the_map;
+          container2_map = the_map;
           con->map_container_tx_samples(ifft_inbuff->get_inbuf(), fft_n, container2_map);
         }
         else if (ID == 2)
         {
-          iq_map_vec container3_map = the_map;
+          container3_map = the_map;
           con->map_container_tx_samples(ifft_inbuff->get_inbuf(), fft_n, container3_map);
         }
         /*
