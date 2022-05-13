@@ -30,6 +30,7 @@ device_uhd::release()
 
 device_uhd::~device_uhd()
 {
+  
 }
 
 void
@@ -54,6 +55,7 @@ device_uhd::set_tx_config(double freq, double rate, double gain)
 }
 
 void
+//Where was set_rx_config() called in the server.cc script to run these??//
 device_uhd::set_rx_config(double freq, double rate, double gain)
 {
   abstract_device::set_rx_config(freq, rate, gain);
@@ -85,6 +87,8 @@ device_uhd::set_rx_config(double freq, double rate, double gain)
 void
 device_uhd::send(const iq_window &buf, size_t len)
 {
+  //Josh_added?
+  //abstract_device::send(buf, len);
 #ifdef USE_USRP_STREAM_API
     uhd::tx_metadata_t md;
     md.start_of_burst = false;
@@ -102,10 +106,11 @@ device_uhd::send(const iq_window &buf, size_t len)
     md.start_of_burst = false;
     md.end_of_burst = false;
     md.has_time_spec = false;
+    //printf("Working: Test\n");
     tx_stream->send(&buf.front(), buf.size(), md);
 #endif
 }
-
+////////////////////RECEIVE CHAIN////////////////////////
 size_t
 device_uhd::receive(iq_window &buf, size_t len)
 {
@@ -164,7 +169,8 @@ device_uhd::receive(iq_window &buf, size_t len)
       }
 #endif
 }
-
+///////////////////////////////////////////////////////////////////////////////////
+      ///////////////////////////BELOW NOT PRELIMINARY//////////////////////
 device_image_gen::device_image_gen(std::string device_args)
 {
   logger = hydra_log("backend|image");

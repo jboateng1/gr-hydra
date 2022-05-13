@@ -34,6 +34,7 @@ class fft_complex
      * @param fft_size
      * @param fortward
      */
+    
     fft_complex(size_t fft_size, bool forward = true);
 
     /**
@@ -46,6 +47,7 @@ class fft_complex
     /**
     */
     iq_sample* get_inbuf();
+    iq_sample* get_fdbuff();
 
     /**
      */
@@ -59,6 +61,7 @@ class fft_complex
     size_t g_fft_size;
     bool g_forward;
     iq_sample *g_inbuf;
+    iq_sample *freqdomain_sample_buffer;
     iq_sample *g_outbuf;
     fftwf_plan g_plan;
 

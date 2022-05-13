@@ -22,6 +22,7 @@
 
 namespace hydra {
 
+
 fft_complex::fft_complex(size_t fft_size, bool forward):
    g_fft_size(fft_size),
    g_forward(forward)
@@ -56,7 +57,7 @@ fft_complex::reset_outbuf()
 }
 
 iq_sample*
-fft_complex::get_inbuf()
+fft_complex::get_inbuf() //this has been redefined in Hypervisor
 {
    return g_inbuf;
 }
@@ -66,6 +67,13 @@ fft_complex::get_outbuf()
 {
    return g_outbuf;
 }
+
+/*
+iq_sample*  //This function is defined for the IFFT input from the containers
+fft_complex::get_fdbuff()
+{
+   return freqdomain_sample_buffer;
+}*/
 
 void
 fft_complex::execute()

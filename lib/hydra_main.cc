@@ -50,8 +50,8 @@ void HydraMain::run()
    // Run the statistics reporting server
    // monitor->run();
 
-   // Run the XVL server
-   server->run();
+   // Run the XVL server: This run() below connects to the client and collects user resources
+   //server->run();
 }
 
 

@@ -217,6 +217,7 @@ HydraServer::run()
 	logger.debug("d_bw: " + std::to_string(d_bw));
 	logger.debug("u_id: " + std::to_string(u_id));
 
+        //Josh
         // If ID == 0, the client is asking us to give them an id
         if (u_id == 0) {
           u_id = new_id;
@@ -352,7 +353,7 @@ HydraServer::run()
   autod.join();
 
   // Output message when server stops
-  logger.info("Stopped XVL Server");
+  logger.info("Stopped BackEnd Server");
 
   return 0;
 }

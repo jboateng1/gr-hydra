@@ -51,9 +51,12 @@ class HYDRA_API hydra_block: virtual public gr::block
    * @param cf Central frequency
    * @param bandwidth Bandwidth
    */
+
+  /*
   size_t create_vradio(double cf, double bandwidth) {
     return  g_hypervisor->create_vradio(cf, bandwidth);
   }
+  */
 
 
   /** Return pointer to Hypervisor
@@ -63,11 +66,12 @@ class HYDRA_API hydra_block: virtual public gr::block
   {
     return g_hypervisor.get();
   }
-
+  /*
   int set_central_frequency(size_t vr_idx, float cf)
   {
     return g_hypervisor->get_vradio(vr_idx)->set_central_frequency(cf);
   }
+  */
 };
 
   } /* namespace hydra */
